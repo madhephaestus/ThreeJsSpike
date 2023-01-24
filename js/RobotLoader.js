@@ -32,15 +32,47 @@ const type="T";
 const circular=false;
 const seperationDist = 60;
 
-var mesh 
+var tip,rib,base 
 const material = new THREE.MeshPhongMaterial( { color: 0x0000FF } );
 const loader = new STLLoader()
+let startState = [];
+for(let i=0; i<3; i+=1){
+    startState.push(false);
+}
 loader.load(
     '../assets/fingertip.stl',
     function (geometry) {
-        mesh = new THREE.Mesh(geometry, material)
-        scene.add(mesh)
-        start()
+        tip = new THREE.Mesh(geometry, material)
+        scene.add(tip)
+        start(0)
+    },
+    (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+    },
+    (error) => {
+        console.log(error)
+    }
+)
+loader.load(
+    '../assets/fingerRib.stl',
+    function (geometry) {
+        rib = new THREE.Mesh(geometry, material)
+        scene.add(rib)
+        start(1)
+    },
+    (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+    },
+    (error) => {
+        console.log(error)
+    }
+)
+loader.load(
+    '../assets/fingerBase.stl',
+    function (geometry) {
+        base = new THREE.Mesh(geometry, material)
+        scene.add(base)
+        start(2)
     },
     (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
@@ -63,8 +95,13 @@ function render() {
     renderer.render(scene, camera)
 }
 
-function start() {
-        animate();
+function start(myIndex) {
+	startState[myIndex]=true;
+	for(let i=0; i<3; i+=1){
+	    if (!startState[i])
+	   	 return
+	}
+    animate();
 }
 function animate() {
 	requestAnimationFrame( animate );
@@ -73,7 +110,7 @@ function animate() {
 	controls.update();
 	
 	//cube.rotation.x += 0.01;
-	mesh.rotation.z += 0.01;
+	tip.rotation.z += 0.01;
 	render();
 };
 
