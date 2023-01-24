@@ -111,6 +111,9 @@ function animate() {
 	
 	//cube.rotation.x += 0.01;
 	tip.rotation.z += 0.01;
+	rib.rotation.y += 0.01;
+	base.rotation.x += 0.01;
+	
 	render();
 };
 
