@@ -1,6 +1,8 @@
 import { OrbitControls } from './OrbitControls.js'; 
 import { STLLoader } from './STLLoader.js'
 import { GUI } from './lil-gui.module.min.js';
+import { DHStep } from './DHChain.js';
+import { DHChain } from './DHChain.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -31,6 +33,12 @@ const bellows=2;
 const type="T";
 const circular=false;
 const seperationDist = 60;
+
+const links = [];
+links.push(new DHStep(20,0,0,0))
+links.push(new DHStep(30,0,0,0))
+links.push(new DHStep(40,0,0,0))
+const chain = new DHChain(new THREE.Matrix4(),new THREE.Matrix4(),links)
 
 var tip,rib,base 
 const material = new THREE.MeshPhongMaterial( { color: 0x0000FF } );
