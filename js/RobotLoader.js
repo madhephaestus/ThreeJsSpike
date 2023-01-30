@@ -36,7 +36,9 @@ const seperationDist = 60;
 
 const links = [];
 links.push(new DHStep(20,0,0,0))
-links.push(new DHStep(30,0,0,0))
+for(let i=0; i<bellows; i+=1){
+	links.push(new DHStep(30,0,0,0))
+}
 links.push(new DHStep(40,0,0,0))
 const chain = new DHChain(new THREE.Matrix4(),new THREE.Matrix4(),links)
 
